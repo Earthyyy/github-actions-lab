@@ -25,4 +25,4 @@ jobs:
       - name: echo a string
         run: Write-Output "Hello, World"
       - name: Error Step
-        run: DoesNotExist
+        run: DoesNotExist skipped
