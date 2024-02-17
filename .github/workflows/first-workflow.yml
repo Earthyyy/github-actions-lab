@@ -1,0 +1,13 @@
+name: First Workflow # Name of the workflow
+on: [push] # Event that triggers the workflow (on push to the repository)
+
+jobs:
+  run-shell-commands: # Job ID
+    runs-on: ubuntu-latest # Runner OS
+    steps: # Job steps
+      - name: echo a string # Step name
+        run: echo "Hello, World" # Step command
+      - name: multiline command
+        run: | # Multiline command with a pipe character
+          node -v
+          npm -v
