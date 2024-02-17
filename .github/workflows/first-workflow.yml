@@ -2,6 +2,7 @@ name: First Workflow # Name of the workflow
 on: [push] # Event that triggers the workflow (on push to the repository)
 
 jobs:
+  # Each Job runs in a separate runner
   run-shell-commands: # Job ID
     runs-on: ubuntu-latest # Runner OS
     steps: # Job steps
@@ -11,3 +12,17 @@ jobs:
         run: | # Multiline command with a pipe character
           node -v
           npm -v
+  parallel-job-macos:
+    runs-on: macos-latest
+    steps:
+      - name: View SW Version
+        run:
+
+  dependant-job:
+    runs-on: windows-latest
+    needs: run-shell-commands # Job dependency
+    steps:
+      - name: echo a string
+        run: Write-Output "Hello, World"
+      - name: Error Step
+        run: DoesNotExist
