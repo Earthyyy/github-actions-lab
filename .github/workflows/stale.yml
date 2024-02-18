@@ -1,0 +1,15 @@
+name: Stale Issue & PRs
+on:
+  schedule: # run workflow automatically on a schedule
+    - cron: "0 19 * * *" # min hour day month day-of-week
+    - cron: "0/5 * * * *"
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v8
+        with:
+          stale-issue-label: "stale"
+          days-before-stale: 1
+          days-before-close: 5
