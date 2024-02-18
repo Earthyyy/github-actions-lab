@@ -1,8 +1,26 @@
 name: Repository Events
 on:
   push:
+    # Will only run if all conditions are met
+    branches:
+      - main # Push events to main branch
+      - "feature/*" # Push events to feature branches (e.g. feature/branch-name)
+      - "!feature/featA" # Exclude push events to feature/featA branch
+    tags:
+      - v1.* # Match v1.0, v1.1, ...
+      - "!v1.1.1" # Exclude v1.1.1 tag
+    paths:
+      - "**.js" # Push events to files with .js extension
+      - "!app.js" # Exclude push events to app.js file
+  #  branches-ignore:
+  #    - develop
+
   pull_request:
     types: [opened, assigned, reopened, synchronize]
+    branches:
+      - main
+    paths:
+      - "**.js"
   issues:
     types: [opened]
 
