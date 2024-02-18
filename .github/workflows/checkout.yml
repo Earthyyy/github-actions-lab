@@ -1,0 +1,20 @@
+name: Checkout
+on: [push]
+
+jobs:
+  checkout-and-display-files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: List Files
+        run: ls -a
+      - name: Checkout
+        run: |
+          git init
+          git remote add origin "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
+          git fetch origin
+          git checkout main
+      # $GITHUB_ACTOR: The username of the person or app that initiated the workflow run.
+      # ${{ secrets.GITHUB_TOKEN }}: A GitHub App installation access token. The token's permissions are limited to the repository that contains your workflow file.
+      # $GITHUB_REPOSITORY: The owner and repository name. For example, octocat/Hello-World.
+      - name: List Files After
+        run: ls -a
