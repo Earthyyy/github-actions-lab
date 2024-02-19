@@ -5,6 +5,7 @@ jobs:
   env-vars-and-context:
     runs-on: ubuntu-latest
     steps:
+      # The difference between the two is that the first will be evaluated on the runner machine, while the second will be evaluated by github actions before sending the workflow to the runner machine.
       - name: Log ENV VAR
         run: echo $GITHUB_REF
       - name: Log CONTEXT
