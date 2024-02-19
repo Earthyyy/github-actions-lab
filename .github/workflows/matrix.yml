@@ -4,10 +4,32 @@ on: [push]
 # Using a matrix to test against multiple Node.js versions on Ubuntu and Windows
 jobs:
   node-matrix:
+    # Will continue to run even if one of the jobs fails
+    # continue-on-error: true
+    continue-on-error: false
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
         node-version: [14, 15, 16]
+        include:
+          # Include is-ubuntu for the ubuntu-latest jobs
+          - os: ubuntu-latest
+            is-ubuntu: true
+            # Add a matrix for macOS
+          - os: macos-latest
+            node-version: 15
+          - experimental: false
+          - os: ubuntu-latest
+            node-version: 16
+            experimental: true
+          - os: ubuntu-latest
+            node-version: 17
+        exclude:
+          - os: ubuntu-latest
+            node-version: 14
+      fail-fast: false
+      # Will run 3 jobs in parallel
+      max-parallel: 3
     runs-on: ${{ matrix.os }}
     steps:
       - run: node -v
@@ -15,3 +37,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: node -v
+# All Combinations
+# { os: 'ubuntu-latest', node-version: 14, is-ubuntu: true, experimental: false } [Excluded]
+# { os: 'ubuntu-latest', node-version: 15, is-ubuntu: true, experimental: false }
+# { os: 'ubuntu-latest', node-version: 16, is-ubuntu: true, experimental: true }
+# { os: 'windows-latest', node-version: 14, experimental: false }
+# { os: 'windows-latest', node-version: 15, experimental: false }
+# { os: 'windows-latest', node-version: 16, experimental: false }
+# { os: 'macos-latest', node-version: 15}
+# { os: 'ubuntu-latest', node-version: 17}
+
